@@ -296,4 +296,4 @@ This project uses the [MIT License](https://opensource.org/licenses/MIT) (Larave
 
 Built for **Suicide Squad 11.5** — PSS Sleman supporter community.
 
-Built with love by [GEGA CREATIVE](https://www.gegacreative.com/)
+Built with love by [rahmatez](https://www.github/rahmatez.com/)

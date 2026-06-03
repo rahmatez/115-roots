@@ -176,7 +176,7 @@
             <div class="footer__privacy">
                 {{-- <a href="#">Terms & Agreements</a>
                 <a href="#">Privacy Policy</a> --}}
-                <a href="https://www.gegacreative.com/" target="_blank">Build with love by GEGA CREATIVE</a>
+                <a href="https://www.github.com/rahmatez.com/" target="_blank">Build with love by rahmatez</a>
             </div>
         </div>
     </footer>
