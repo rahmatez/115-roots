@@ -33,13 +33,15 @@ php artisan storage:link
 
 | Variabel | Deskripsi |
 |----------|-----------|
+| `ADMIN_NAME` | Nama admin saat seed (default: `Admin`) |
+| `ADMIN_EMAIL` | Email admin saat seed (default: `admin@suicide.com`) |
 | `ADMIN_PASSWORD` | Password admin saat seed (default: `suicide115`) |
 | `MAIL_*` | Konfigurasi email untuk form kontak & balasan admin |
 | `APP_URL` | URL situs (untuk sitemap & OG tags) |
 
 ### Akun admin default
 
-- Email: `admin@suicide.com`
+- Email: nilai `ADMIN_EMAIL` di `.env`, atau `admin@suicide.com` jika tidak diset
 - Password: nilai `ADMIN_PASSWORD` di `.env`, atau `suicide115` jika tidak diset
 
 ## Menjalankan

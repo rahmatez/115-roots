@@ -4,21 +4,19 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         User::updateOrCreate(
-            ['email' => 'admin@suicide.com'],
+            ['email' => env('ADMIN_EMAIL', 'admin@suicide.com')],
             [
-                'name' => 'Admin',
-                'password' => bcrypt(env('ADMIN_PASSWORD', 'suicide115')),
+                'name' => env('ADMIN_NAME', 'Admin'),
+                'password' => Hash::make(env('ADMIN_PASSWORD', 'suicide115')),
                 'is_admin' => true,
+                'email_verified_at' => now(),
             ]
         );
     }
