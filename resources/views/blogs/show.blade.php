@@ -1,5 +1,15 @@
 @extends('layouts.frontend')
 
+@section('title', ($blog->meta_title ?? $blog->title) . ' | Suicide Squad 11.5')
+
+@section('meta')
+    <meta name="description" content="{{ $blog->meta_description ?? Str::limit(strip_tags($blog->excerpt), 160) }}">
+    <meta property="og:title" content="{{ $blog->meta_title ?? $blog->title }}">
+    <meta property="og:description" content="{{ $blog->meta_description ?? Str::limit(strip_tags($blog->excerpt), 160) }}">
+    <meta property="og:url" content="{{ route('blog.show', $blog->slug) }}">
+    <meta property="og:image" content="{{ url(Storage::url($blog->image)) }}">
+@endsection
+
 @section('content')
     <!--==================== HOME ====================-->
     <section>
@@ -114,7 +124,7 @@
                             </p>
 
                             <div class="blog__footer">
-                                <div class="blog__reaction">{{ date('d M Y', strtotime($relatedBlog->crated_at)) }}</div>
+                                <div class="blog__reaction">{{ date('d M Y', strtotime($relatedBlog->created_at)) }}</div>
                                 <div class="blog__reaction">
                                     <i class="bx bx-show"></i>
                                     <span>{{ $relatedBlog->reads }}</span>

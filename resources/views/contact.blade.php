@@ -1,18 +1,25 @@
 @extends('layouts.frontend')
 
+@section('meta')
+    @if($page)
+        <title>{{ $page->meta_title ?? $page->title }} | Suicide Squad 11.5</title>
+        @if($page->meta_description)
+            <meta name="description" content="{{ $page->meta_description }}">
+        @endif
+    @endif
+@endsection
+
 @section('content')
-    <!--==================== HOME ====================-->
     <section>
         <div class="swiper-container gallery-top">
             <div class="swiper-wrapper">
-                <!--========== ISLANDS 1 ==========-->
                 <section class="islands swiper-slide">
                     <img src="{{ asset('frontend/assets/img/con-top.JPG') }}" alt="" class="islands__bg" />
                     <div class="bg__overlay">
                         <div class="islands__container container">
                             <div class="islands__data">
-                                <h2 class="islands__subtitle">Need Information</h2>
-                                <h1 class="islands__title">Contact Us</h1>
+                                <h2 class="islands__subtitle">{{ $page->subtitle ?? 'Need Information' }}</h2>
+                                <h1 class="islands__title">{{ $page->title ?? 'Contact Us' }}</h1>
                             </div>
                         </div>
                     </div>
@@ -20,12 +27,11 @@
             </div>
         </div>
     </section>
-    <!--==================== CONTACT ====================-->
+
     <section class="contact section" id="contact">
         <div class="contact__container container grid">
             <div class="contact__images">
                 <div class="contact__orbe"></div>
-
                 <div class="contact__img">
                     <img src="{{ asset('frontend/assets/img/contact-img.PNG') }}" alt="" />
                 </div>
@@ -33,66 +39,65 @@
 
             <div class="contact__content">
                 <div class="contact__data">
-                    <span class="section__subtitle">Need Help</span>
-                    <h2 class="section__title">Don't hesitate to contact us</h2>
-                    <p class="contact__description">
-                        Are you still confused about the information on this website page? Don't worry, just contact us for
-                        more information.
-                    </p>
+                    <span class="section__subtitle">{{ $page->subtitle ?? 'Need Help' }}</span>
+                    <h2 class="section__title">{{ $page->title ?? 'Contact Us' }}</h2>
+                    @if($page && $page->content)
+                        <div class="contact__description">{!! $page->content !!}</div>
+                    @else
+                        <p class="contact__description">Don't hesitate to contact us for more information.</p>
+                    @endif
                 </div>
 
                 <div class="contact__card">
-                    <div class="contact__card-box">
-                        <div class="contact__card-info">
-                            <i class="bx bxl-youtube"></i>
-                            <div>
-                                <h3 class="contact__card-title">Youtube</h3>
-                                <p class="contact__card-description">suicidesquad11.5</p>
+                    @foreach(($page->settings['social_links'] ?? []) as $link)
+                        <div class="contact__card-box">
+                            <div class="contact__card-info">
+                                <i class="bx {{ $link['icon'] ?? 'bx-link' }}"></i>
+                                <div>
+                                    <h3 class="contact__card-title">{{ $link['platform'] }}</h3>
+                                    <p class="contact__card-description">{{ $link['handle'] }}</p>
+                                </div>
                             </div>
+                            <a href="{{ $link['url'] }}" target="_blank">
+                                <button type="button" class="button contact__card-button">Visit Now</button>
+                            </a>
                         </div>
-                        <a href="https://www.youtube.com/@suicidesquad11.52" target="_blank">
-                            <button class="button contact__card-button">Visit Now</button>
-                        </a>
-                    </div>
-                    <div class="contact__card-box">
-                        <div class="contact__card-info">
-                            <i class="bx bxl-twitter"></i>
-                            <div>
-                                <h3 class="contact__card-title">Twitter</h3>
-                                <p class="contact__card-description">suicidesquad76</p>
-                            </div>
-                        </div>
-                        <a target="_blank" href="https://twitter.com/suicidesquad76">
-                            <button class="button contact__card-button">Visit Now</button>
-                        </a>
-                    </div>
-                    <div class="contact__card-box">
-                        <div class="contact__card-info">
-                            <i class="bx bxs-envelope"></i>
-                            <div>
-                                <h3 class="contact__card-title">Email</h3>
-                                <p class="contact__card-description">squadsuicide170 @gmail.com</p>
-                            </div>
-                        </div>
-                        <a href="mailto:squadsuicide170@gmail.com" target="_blank"></a>
-                        <button class="button contact__card-button">
-                            Email Now
-                        </button>
-                    </div>
-                    <div class="contact__card-box">
-                        <div class="contact__card-info">
-                            <i class="bx bxl-instagram"></i>
-                            <div>
-                                <h3 class="contact__card-title">Instagram</h3>
-                                <p class="contact__card-description">Suicide Squad 11.5</p>
-                            </div>
-                        </div>
-                        <a href="https://www.instagram.com/suicidesquad11.5/" target="_blank">
-                            <button class="button contact__card-button">Visit Now</button>
-                        </a>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </section>
+
+    <section class="contact section">
+        <div class="contact__container container">
+            <h2 class="section__title" style="text-align:center;margin-bottom:1.5rem;">Send us a message</h2>
+            <form id="myForm" class="contact-form" style="max-width:600px;margin:0 auto;">
+                @csrf
+                <div class="form-group mb-3">
+                    <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+                </div>
+                <div class="form-group mb-3">
+                    <textarea name="message" class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                </div>
+                <button type="submit" id="submitBtn" class="button contact__card-button">Send Message</button>
+            </form>
+        </div>
+    </section>
 @endsection
+
+@push('style-alt')
+<style>
+    .contact-form .form-control {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
+</style>
+@endpush

@@ -2,36 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMail;
+use App\Models\ContactMessage;
+use App\Http\Requests\ContactRequest;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
-    public function sendEmail(Request $request)
+    public function sendEmail(ContactRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'subject' => 'required',
-            'message' => 'required',
-        ]);
+        $data = $request->validated();
 
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'subject' => $request->subject,
-            'message' => $request->message,
-        ];
+        $message = ContactMessage::create($data + ['status' => ContactMessage::STATUS_NEW]);
 
         try {
-            // Mengirim email
             Mail::to(config('mail.from.address'))->send(new ContactMail($data));
-
-            return response()->json(['message' => 'Pesan anda berhasil terkirim!']);
         } catch (\Exception $e) {
-            // Penanganan kesalahan saat mengirim email
-            return response()->json(['message' => 'Failed to send email. Please try again later.'], 500);
+            report($e);
         }
+
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda.']);
+        }
+
+        return redirect()->back()->with('message', 'Pesan Anda berhasil terkirim!');
     }
 }

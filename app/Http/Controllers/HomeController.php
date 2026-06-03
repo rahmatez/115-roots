@@ -3,21 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
-use Illuminate\Http\Request;
-use App\Models\TravelPackage;
+use App\Models\Page;
 
 class HomeController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        $travel_packages = TravelPackage::with('galleries')->get();
-        $blogs = Blog::latest()->get()->take(6);
+        $blogs = Blog::latest()->take(6)->get();
+        $siteSettings = Page::findBySlug('site_settings');
 
-        return view('homepage', compact('travel_packages','blogs'));
+        return view('homepage', compact('blogs', 'siteSettings'));
     }
 }

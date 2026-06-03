@@ -10,12 +10,12 @@
     --first-color-light: hsl(228, 62%, 59%);
     --first-color-lighten: hsl(228, 100%, 97%);
     --second-color: hsl(25, 83%, 53%);
-    --title-color: hsl(228, 57%, 28%);
-    --text-color: hsl(228, 15%, 50%);
-    --text-color-light: hsl(228, 12%, 75%);
-    --border-color: hsl(228, 99%, 98%);
-    --body-color: #fff;
-    --container-color: #fff;
+    --title-color: #ffffff;
+    --text-color: #c4c5ca;
+    --text-color-light: #9a9ca3;
+    --border-color: #2e3036;
+    --body-color: #121316;
+    --container-color: #1a1b1f;
 }
 
 
@@ -33,12 +33,13 @@
 
 html {
     scroll-behavior: smooth;
+    background-color: #121316;
 }
 
 body {
     font-family: "Poppins", sans-serif;
     font-size: 0.938rem;
-    background-color: var(--body-color);
+    background-color: #121316;
     color: var(--text-color);
     -webkit-transition: 0.3s;
     transition: 0.3s;
@@ -180,6 +181,7 @@ body.dark-theme {
 
 .main {
     overflow: hidden;
+    background-color: #121316;
     /* For the animations ScrollReveal*/
 }
 
@@ -570,7 +572,7 @@ body.dark-theme {
 .value__orbe {
     width: 266px;
     height: 316px;
-    background-color: #f6f6f9;
+    background-color: #1e1f24;
     border-radius: 135px 135px 16px 16px;
 }
 
@@ -704,7 +706,7 @@ body.dark-theme {
 .contact__orbe {
     width: 266px;
     height: 316px;
-    background-color: #f6f6f9;
+    background-color: #1e1f24;
     border-radius: 135px 135px 16px 16px;
 }
 

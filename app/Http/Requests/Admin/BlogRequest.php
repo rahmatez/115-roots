@@ -28,7 +28,9 @@ class BlogRequest extends FormRequest
                     'excerpt' => 'required',
                     'image' => ['required', 'image', 'mimes:png,jpg,jpeg'],
                     'description' => 'required',
-                    'category_id' => 'required'
+                    'category_id' => 'required',
+                    'meta_title' => ['nullable', 'string', 'max:255'],
+                    'meta_description' => ['nullable', 'string', 'max:500'],
                 ];
             }
             case 'PUT':
@@ -38,9 +40,13 @@ class BlogRequest extends FormRequest
                     'excerpt' => 'required',
                     'image' => ['image', 'mimes:png,jpg,jpeg'],
                     'description' => 'required',
-                    'category_id' => 'required'
+                    'category_id' => 'required',
+                    'meta_title' => ['nullable', 'string', 'max:255'],
+                    'meta_description' => ['nullable', 'string', 'max:500'],
                 ];
             }
+            default:
+                return [];
         }
     }
 }

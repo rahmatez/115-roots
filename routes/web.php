@@ -1,61 +1,45 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
+use App\Http\Controllers\Admin\PageController as AdminPageController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GalleryItemController;
+use App\Http\Controllers\Admin\ContactMessageController;
 
 Auth::routes(['register' => false]);
 
-Route::group(['middleware' => ['is_admin','auth'], 'prefix' => 'admin', 'as' => 'admin.'], function() {
-    Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+Route::group(['middleware' => ['is_admin', 'auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // booking
-    Route::resource('bookings', \App\Http\Controllers\Admin\BookingController::class)->only(['index', 'destroy']);
-    // travel packages
-    Route::resource('travel_packages', \App\Http\Controllers\Admin\TravelPackageController::class)->except('show');
-    Route::resource('travel_packages.galleries', \App\Http\Controllers\Admin\GalleryController::class)->except(['create', 'index','show']);
-    // categories
-    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)->except('show');
-    // blogs
-    Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class)->except('show');
-    // profile
-    Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
-    Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
-    Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::resource('gallery_items', GalleryItemController::class)->except('show');
+    Route::resource('pages', AdminPageController::class)->only(['index', 'edit', 'update']);
+    Route::resource('contact_messages', ContactMessageController::class)->only(['index', 'show', 'update', 'destroy']);
+    Route::resource('users', AdminUserController::class)->except('show');
+    Route::resource('categories', CategoryController::class)->except('show');
+    Route::resource('blogs', AdminBlogController::class)->except('show');
+
+    Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('homepage');
-// travel packages
-Route::get('travel-packages',[\App\Http\Controllers\TravelPackageController::class, 'index'])->name('travel_package.index');
-Route::get('travel-packages/{travel_package:slug}',[\App\Http\Controllers\TravelPackageController::class, 'show'])->name('travel_package.show');
-// blogs
-Route::get('blogs', [\App\Http\Controllers\BlogController::class, 'index'])->name('blog.index');
-Route::get('blogs/{blog:slug}', [\App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
-Route::get('blogs/category/{category:slug}', [\App\Http\Controllers\BlogController::class, 'category'])->name('blog.category');
-// gallery
-Route::get('gallery', function() {
-    return view('gallery');
-})->name('gallery');
-// contact
-Route::get('contact', function() {
-    return view('contact');
-})->name('contact');
-// about-us
-Route::get('about-us', function() {
-    return view('about-us');
-})->name('about-us');
-// booking
-Route::post('booking', [App\Http\Controllers\BookingController::class, 'store'])->name('booking.store');
-Route::post('send-email', [App\Http\Controllers\ContactController::class, 'sendEmail'])->name('send.email');
-// send mail
-// Route::post('/send-email', 'ContactController@sendEmail')->name('send.email');
+Route::get('/', [HomeController::class, 'index'])->name('homepage');
+Route::get('blogs', [BlogController::class, 'index'])->name('blog.index');
+Route::get('blogs/{blog:slug}', [BlogController::class, 'show'])->name('blog.show');
+Route::get('blogs/category/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
+Route::get('gallery', [GalleryController::class, 'index'])->name('gallery');
+Route::get('contact', [PageController::class, 'contact'])->name('contact');
+Route::get('about-us', [PageController::class, 'about'])->name('about-us');
 
+Route::post('send-email', [ContactController::class, 'sendEmail'])
+    ->middleware('throttle:contact')
+    ->name('send.email');

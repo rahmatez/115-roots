@@ -3,11 +3,8 @@
 @section('content')
     <div class="hero">
         <img class="lazy_img emblem" data-src="{{ asset('frontend/assets/img/logo/EMBLEM.png') }}" alt="">
-        <h1>SUICIDE SQUAD 11.5</h1>
-        <p>
-            Here we pour out our feelings <br />
-            about love and anger for pride.
-        </p>
+        <h1>{{ $siteSettings?->settings['hero_title'] ?? 'SUICIDE SQUAD 11.5' }}</h1>
+        <p>{!! nl2br(e($siteSettings?->settings['hero_subtitle'] ?? "Here we pour out our feelings\nabout love and anger for pride.")) !!}</p>
 
         <div class="background-hero">
             <img class="lazy_img hero-bg show-hero" data-src="{{ asset('frontend/assets/img/hero1.jpg') }}" alt="">
@@ -152,45 +149,6 @@
         </div>
     </section>
 
-    <!--==================== POPULAR ====================-->
-    {{-- <section class="section" id="popular">
-        <div class="container">
-            <span class="section__subtitle" style="text-align: center">Best Choice</span>
-            <h2 class="section__title" style="text-align: center">
-                Popular Activities
-            </h2>
-
-            <div class="popular__container swiper">
-                <div class="swiper-wrapper">
-                    @foreach ($travel_packages as $travel_package)
-                        <article class="popular__card swiper-slide">
-                            <a href="{{ route('travel_package.show', $travel_package->slug) }}">
-                                <img data-src="{{ Storage::url($travel_package->galleries->first()->images) }}"
-                                    alt="" class="popular__img lazy_img" />
-                                <div class="popular__data">
-                                    <h2 class="popular__price">
-                                        <span>$</span>{{ number_format($travel_package->price, 2) }}
-                                    </h2>
-                                    <h3 class="popular__title">
-                                        {{ $travel_package->location }}
-                                    </h3>
-                                    <p class="popular__description">{{ $travel_package->type }}</p>
-                                </div>
-                            </a>
-                        </article>
-                    @endforeach
-                </div>
-
-                <div class="swiper-button-next">
-                    <i class="bx bx-chevron-right"></i>
-                </div>
-                <div class="swiper-button-prev">
-                    <i class="bx bx-chevron-left"></i>
-                </div>
-            </div>
-        </div>
-    </section> --}}
-
     <!-- blog -->
     <section class="blog section" id="blog">
         <div class="blog__container container">
@@ -243,105 +201,101 @@
         </div>
     </section>
 
-    <!--==================== Slider Image ====================-->
+    <!--==================== Slider Image (static — tidak dari admin) ====================-->
     <div class="tz-gallery">
         <div class="slideshow-img">
-            <div class="gallery-slider-pot lazy_img">
+            <div class="gallery-slider-pot">
                 <div class="slide-track-pot">
-
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-1.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-1.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-1.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-2.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-2.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-2.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-3.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-3.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-3.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-4.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-4.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-4.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-5.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-5.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-5.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-1.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-1.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-1.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-2.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-2.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-2.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-3.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-3.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-3.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-4.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-4.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-4.jpg') }}" alt="">
                         </a>
                     </div>
-
-
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-1.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-1.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-1.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-2.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-2.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-2.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-3.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-3.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-3.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-4.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-4.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-4.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-5.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-5.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-5.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-1.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-1.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-1.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-2.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-2.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-2.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-3.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-3.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-3.jpg') }}" alt="">
                         </a>
                     </div>
                     <div class="slide-item-pot">
                         <a class="lightbox" href="{{ asset('frontend/assets/img/gal-4.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-4.jpg') }}">
+                            <img src="{{ asset('frontend/assets/img/gal-4.jpg') }}" alt="">
                         </a>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -349,7 +303,7 @@
 
     <!--==================== VIDEO EMBED ====================-->
     <section class="container">
-        <div class="video-section lazy_img">
+        <div class="video-section">
             <iframe class="youtube-video" src="https://www.youtube.com/embed/fLLJzNB15mI?si=CY6u_7UdphzYDAB2"
                 title="YouTube video player" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

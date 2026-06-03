@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
     @stack('style-alt')
-    <title>Suicide Squad 11.5 | Born From Blood</title>
+    @yield('meta')
+    <title>@yield('title', 'Suicide Squad 11.5 | Born From Blood')</title>
 
     {{-- Favicon --}}
     <link rel="shortcut icon" href="{{ asset('frontend/assets/favicon/favicon.ico') }}" type="image/x-icon">
@@ -51,13 +52,6 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    {{-- <li class="nav__item">
-                        <a href="{{ route('travel_package.index') }}"
-                            class="nav__link {{ request()->is('travel-packages') || request()->is('travel-packages/*') ? ' active-link' : '' }}">
-                            <i class="bx bx-building-house"></i>
-                            <span>Package</span>
-                        </a>
-                    </li> --}}
                     <li class="nav__item">
                         <a href="{{ route('blog.index') }}"
                             class="nav__link {{ request()->is('blogs') || request()->is('blogs/*') ? ' active-link' : '' }}">
@@ -105,7 +99,7 @@
                         alt="Desa Gabugan" srcset="">
                 </a>
                 <p class="footer__description">
-                    Our vision is to provide the best service <br> and share the best experience for many people
+                    {{ $siteSettings?->settings['footer_description'] ?? 'Our vision is to provide the best service and share the best experience for many people' }}
                 </p>
             </div>
 
@@ -145,17 +139,11 @@
                     <h3 class="footer__title">Follow us</h3>
 
                     <ul class="footer__social">
-                        <a href="https://twitter.com/suicidesquad76" target="_blank" class="footer__social-link">
-                            <i class="bx bxl-twitter"></i>
-                        </a>
-                        <a href="https://www.instagram.com/suicidesquad11.5/" target="_blank"
-                            class="footer__social-link">
-                            <i class="bx bxl-instagram-alt"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@suicidesquad11.52"
-                            class="footer__social-link">
-                            <i class="bx bxl-youtube"></i>
-                        </a>
+                        @foreach(($siteSettings?->settings['social_links'] ?? []) as $social)
+                            <a href="{{ $social['url'] }}" target="_blank" class="footer__social-link">
+                                <i class="bx {{ $social['icon'] ?? 'bx-link' }}"></i>
+                            </a>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -163,7 +151,7 @@
 
         <div class="footer__info container">
             <span class="footer__copy">
-                &#169; SUICIDE SQUAD 11.5. 2024. All rigths reserved.
+                &#169; {{ $siteSettings?->settings['footer_copyright'] ?? 'SUICIDE SQUAD 11.5. All rights reserved.' }}
             </span>
             <div class="footer__privacy">
                 {{-- <a href="#">Terms & Agreements</a>
@@ -196,6 +184,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
+            if (!$('#myForm').length) return;
             $('#myForm').submit(function (e) {
                 e.preventDefault(); // Menghentikan pengiriman formulir standar
                 // Menampilkan indikator loading dan mengubah teks tombol
