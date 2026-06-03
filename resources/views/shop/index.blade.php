@@ -32,7 +32,7 @@
                     <div class="swiper-wrapper">
                         @foreach($products as $product)
                             <article class="popular__card swiper-slide">
-                                <a href="{{ $product->external_url ?: route('shop.show', $product->slug) }}">
+                                <a href="{{ route('shop.show', $product->slug) }}">
                                     <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" class="popular__img">
                                     <div class="popular__data">
                                         <h2 class="popular__price">
@@ -56,7 +56,7 @@
                         <article class="blog__card">
                             <div class="blog__image">
                                 <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" class="blog__img">
-                                <a href="{{ $product->external_url ?: route('shop.show', $product->slug) }}" class="blog__button">
+                                <a href="{{ route('shop.show', $product->slug) }}" class="blog__button">
                                     <i class="bx bx-right-arrow-alt"></i>
                                 </a>
                             </div>

@@ -50,6 +50,35 @@
                             <input type="url" name="announcement_url" class="form-control" value="{{ old('announcement_url', $page->settings['announcement_url'] ?? '') }}">
                         </div>
 
+                        <hr><h5>Instagram Gallery</h5>
+                        <p class="text-muted" style="font-size:0.875rem;">Gallery page and homepage slider pull photos from your Instagram feed via Meta Graph API.</p>
+                        <div class="form-group">
+                            <label>Instagram Username</label>
+                            <input type="text" name="instagram_username" class="form-control"
+                                value="{{ old('instagram_username', $page->settings['instagram_username'] ?? 'suicidesquad11.5') }}"
+                                placeholder="suicidesquad11.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram User ID</label>
+                            <input type="text" name="instagram_user_id" class="form-control"
+                                value="{{ old('instagram_user_id', $page->settings['instagram_user_id'] ?? '') }}"
+                                placeholder="17841400000000000">
+                            <small class="text-muted">Numeric Instagram Business/Creator account ID from Meta Developer.</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram Access Token</label>
+                            <input type="password" name="instagram_access_token" class="form-control"
+                                value="{{ old('instagram_access_token', $page->settings['instagram_access_token'] ?? '') }}"
+                                placeholder="Long-lived access token">
+                            <small class="text-muted">Long-lived token from Instagram Graph API. Can also set <code>INSTAGRAM_ACCESS_TOKEN</code> in .env.</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Feed Limit</label>
+                            <input type="number" name="instagram_limit" class="form-control" min="1" max="50"
+                                value="{{ old('instagram_limit', $page->settings['instagram_limit'] ?? 25) }}">
+                            <small class="text-muted">Max posts to fetch (1–50). Cached for 1 hour.</small>
+                        </div>
+
                         <hr><h5>YouTube</h5>
                         <div class="form-group">
                             <label>YouTube Embed URL</label>

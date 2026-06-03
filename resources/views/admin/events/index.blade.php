@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
+@section('title', 'Events')
+
 @section('content')
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12 d-flex justify-content-between">
                     <h1 class="m-0">Events</h1>
-                    <a href="{{ route('admin.events.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add Event</a>
+                    <a href="{{ route('admin.events.create') }}" class="btn btn-primary">
+                        <i class="bx bx-plus"></i> Add Event
+                    </a>
                 </div>
             </div>
         </div>

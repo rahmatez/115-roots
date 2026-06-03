@@ -94,7 +94,7 @@
                     <div class="swiper-wrapper">
                         @foreach($products as $product)
                             <article class="popular__card swiper-slide">
-                                <a href="{{ $product->external_url ?: route('shop.show', $product->slug) }}">
+                                <a href="{{ route('shop.show', $product->slug) }}">
                                     <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" class="popular__img">
                                     <div class="popular__data">
                                         <h2 class="popular__price">
@@ -191,15 +191,15 @@
         </div>
     </section>
 
-    {{-- Gallery slider --}}
+    {{-- Gallery slider (Instagram feed) --}}
     @php
         $staticGallery = ['gal-1.jpg', 'gal-2.jpg', 'gal-3.jpg', 'gal-4.jpg', 'gal-5.jpg'];
-        if ($galleryPreview->isNotEmpty()) {
-            $gallerySlides = $galleryPreview->concat($galleryPreview)->concat($galleryPreview);
-            $useStorage = true;
+        if ($instagramMedia->isNotEmpty()) {
+            $gallerySlides = $instagramMedia->concat($instagramMedia)->concat($instagramMedia);
+            $useInstagram = true;
         } else {
             $gallerySlides = collect(array_merge($staticGallery, $staticGallery, $staticGallery));
-            $useStorage = false;
+            $useInstagram = false;
         }
     @endphp
     <div class="tz-gallery">
@@ -208,10 +208,15 @@
                 <div class="slide-track-pot">
                     @foreach($gallerySlides as $item)
                         <div class="slide-item-pot">
-                            <a class="lightbox" href="{{ $useStorage ? Storage::url($item->image) : asset('frontend/assets/img/' . $item) }}">
-                                <img src="{{ $useStorage ? Storage::url($item->image) : asset('frontend/assets/img/' . $item) }}"
-                                    alt="{{ $useStorage ? ($item->title ?? 'Gallery') : 'Gallery' }}">
-                            </a>
+                            @if($useInstagram)
+                                <a class="lightbox" href="{{ $item['media_url'] }}" target="_blank" rel="noopener">
+                                    <img src="{{ $item['image_url'] }}" alt="Instagram" loading="lazy">
+                                </a>
+                            @else
+                                <a class="lightbox" href="{{ asset('frontend/assets/img/' . $item) }}">
+                                    <img src="{{ asset('frontend/assets/img/' . $item) }}" alt="Gallery">
+                                </a>
+                            @endif
                         </div>
                     @endforeach
                 </div>

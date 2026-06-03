@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Page;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PageRequest;
+use App\Models\Page;
+use App\Services\InstagramFeedService;
 
 class PageController extends Controller
 {
+    public function __construct(
+        private InstagramFeedService $instagram
+    ) {}
+
     public function index()
     {
         $pages = Page::orderBy('slug')->get();
@@ -39,8 +44,14 @@ class PageController extends Controller
                 'announcement_url' => $request->input('announcement_url'),
                 'youtube_embed_url' => $request->input('youtube_embed_url'),
                 'youtube_channel_url' => $request->input('youtube_channel_url'),
+                'instagram_username' => $request->input('instagram_username'),
+                'instagram_user_id' => $request->input('instagram_user_id'),
+                'instagram_access_token' => $request->input('instagram_access_token'),
+                'instagram_limit' => (int) $request->input('instagram_limit', 25),
             ]);
             $data['content'] = null;
+
+            $this->instagram->clearCache();
         }
 
         if ($page->slug === 'contact') {

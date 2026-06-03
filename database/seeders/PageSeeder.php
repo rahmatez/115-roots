@@ -83,6 +83,10 @@ class PageSeeder extends Seeder
                     'announcement_url' => '',
                     'youtube_embed_url' => 'https://www.youtube.com/embed/fLLJzNB15mI?si=CY6u_7UdphzYDAB2',
                     'youtube_channel_url' => 'https://www.youtube.com/@suicidesquad11.52',
+                    'instagram_username' => 'suicidesquad11.5',
+                    'instagram_user_id' => '',
+                    'instagram_access_token' => '',
+                    'instagram_limit' => 25,
                 ],
             ]
         );

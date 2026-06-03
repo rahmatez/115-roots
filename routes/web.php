@@ -20,7 +20,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryItemController;
 use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\OrderController;
 
 Auth::routes(['register' => false]);
 
@@ -28,6 +30,7 @@ Route::group(['middleware' => ['is_admin', 'auth'], 'prefix' => 'admin', 'as' =>
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('products', ProductController::class)->except('show');
+    Route::resource('orders', AdminOrderController::class)->only(['index', 'show', 'destroy']);
     Route::resource('gallery_items', GalleryItemController::class)->except('show');
     Route::resource('pages', AdminPageController::class)->only(['index', 'edit', 'update']);
     Route::resource('events', AdminEventController::class)->except('show');
@@ -47,6 +50,9 @@ Route::get('blogs/{blog:slug}', [BlogController::class, 'show'])->name('blog.sho
 Route::get('blogs/category/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
 Route::get('shop', [ShopController::class, 'index'])->name('shop.index');
 Route::get('shop/{product:slug}', [ShopController::class, 'show'])->name('shop.show');
+Route::post('shop/{product:slug}/order', [OrderController::class, 'store'])
+    ->middleware('throttle:orders')
+    ->name('shop.order');
 Route::get('gallery', [GalleryController::class, 'index'])->name('gallery');
 Route::get('events', [EventController::class, 'index'])->name('events.index');
 Route::get('events/{event:slug}', [EventController::class, 'show'])->name('events.show');

@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\ContactMessage;
 use App\Models\Event;
 use App\Models\GalleryItem;
+use App\Models\Order;
 use App\Models\Product;
-use App\Models\ContactMessage;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
@@ -22,11 +23,13 @@ class DashboardController extends Controller
             'gallery_items' => GalleryItem::count(),
             'contact_new' => ContactMessage::where('status', ContactMessage::STATUS_NEW)->count(),
             'contact_total' => ContactMessage::count(),
+            'orders' => Order::count(),
         ];
 
         $recentBlogs = Blog::with('category')->latest()->take(5)->get();
         $recentMessages = ContactMessage::newest()->take(5)->get();
+        $recentOrders = Order::with('product')->latest()->take(5)->get();
 
-        return view('admin.dashboard', compact('stats', 'recentBlogs', 'recentMessages'));
+        return view('admin.dashboard', compact('stats', 'recentBlogs', 'recentMessages', 'recentOrders'));
     }
 }

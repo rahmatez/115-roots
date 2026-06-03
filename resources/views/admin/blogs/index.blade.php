@@ -7,7 +7,9 @@
             <div class="row mb-2">
                 <div class="col-sm-12 justify-content-between d-flex">
                     <h1 class="m-0">{{ __('Blog') }}</h1>
-                    <a href="{{ route('admin.blogs.create') }}" class="btn btn-primary btn-sm"> <i class="fa fa-plus"></i> </a>
+                    <a href="{{ route('admin.blogs.create') }}" class="btn btn-primary btn-sm">
+                        <i class="bx bx-plus"></i> Add Post
+                    </a>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -47,11 +49,15 @@
                                         <td>{{ $blog->excerpt }}</td>
                                         <td>{{ $blog->category->name }}</td>
                                         <td>
-                                            <a href="{{ route('admin.blogs.edit', [$blog]) }}" class="btn btn-sm btn-info"> <i class="fa fa-edit"></i> </a>              
-                                            <form onclick="return confirm('are you sure ?');" class="d-inline-block" action="{{ route('admin.blogs.destroy', [$blog]) }}" method="post">
-                                                @csrf 
+                                            <a href="{{ route('admin.blogs.edit', [$blog]) }}" class="btn btn-sm btn-info">
+                                                <i class="bx bx-edit"></i> Edit
+                                            </a>
+                                            <form onclick="return confirm('Delete this post?');" class="d-inline-block" action="{{ route('admin.blogs.destroy', [$blog]) }}" method="post">
+                                                @csrf
                                                 @method('delete')
-                                                <button class="btn btn-sm btn-danger"> <i class="fa fa-trash"></i> </button>
+                                                <button class="btn btn-sm btn-danger">
+                                                    <i class="bx bx-trash"></i>
+                                                </button>
                                             </form>                              
                                         </td>
                                     </tr>

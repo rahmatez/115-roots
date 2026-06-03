@@ -1,11 +1,16 @@
 @extends('layouts.app')
 
+@section('title', 'Event Photos')
+
 @section('content')
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-12 justify-content-between d-flex">
-                    <h1 class="m-0">{{ __('Gallery') }}</h1>
+                <div class="col-sm-12 justify-content-between d-flex align-items-center">
+                    <div>
+                        <h1 class="m-0">Event Photos</h1>
+                        <p class="text-muted mb-0" style="font-size:0.875rem;margin-top:0.25rem;">For event detail albums only. Main gallery uses Instagram feed.</p>
+                    </div>
                     <a href="{{ route('admin.gallery_items.create') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                 </div>
             </div>

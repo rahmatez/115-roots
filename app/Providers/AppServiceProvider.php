@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\ContactMessage;
 use App\Models\Page;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
@@ -26,7 +27,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Paginator::useBootstrap();
+        Paginator::useBootstrapFive();
+
+        View::composer('layouts.navigation', function ($view) {
+            $view->with('newMessageCount', ContactMessage::where('status', ContactMessage::STATUS_NEW)->count());
+        });
 
         View::composer('layouts.frontend', function ($view) {
             $view->with('siteSettings', Page::findBySlug('site_settings'));
