@@ -27,6 +27,7 @@
                     </div>
 
                     @if($page->slug === 'site_settings')
+                        <hr><h5>Hero Section</h5>
                         <div class="form-group">
                             <label>Hero Title</label>
                             <input type="text" name="hero_title" class="form-control" value="{{ old('hero_title', $page->settings['hero_title'] ?? '') }}">
@@ -35,6 +36,32 @@
                             <label>Hero Subtitle</label>
                             <textarea name="hero_subtitle" class="form-control" rows="2">{{ old('hero_subtitle', $page->settings['hero_subtitle'] ?? '') }}</textarea>
                         </div>
+
+                        <hr><h5>Announcement Banner</h5>
+                        <div class="form-group">
+                            <label><input type="checkbox" name="announcement_active" value="1" {{ old('announcement_active', $page->settings['announcement_active'] ?? false) ? 'checked' : '' }}> Show announcement on homepage</label>
+                        </div>
+                        <div class="form-group">
+                            <label>Announcement Text</label>
+                            <input type="text" name="announcement_text" class="form-control" value="{{ old('announcement_text', $page->settings['announcement_text'] ?? '') }}" placeholder="e.g. Nobar PSS Sleman — Sabtu 20:00 WIB">
+                        </div>
+                        <div class="form-group">
+                            <label>Announcement Link (optional)</label>
+                            <input type="url" name="announcement_url" class="form-control" value="{{ old('announcement_url', $page->settings['announcement_url'] ?? '') }}">
+                        </div>
+
+                        <hr><h5>YouTube</h5>
+                        <div class="form-group">
+                            <label>YouTube Embed URL</label>
+                            <input type="url" name="youtube_embed_url" class="form-control" value="{{ old('youtube_embed_url', $page->settings['youtube_embed_url'] ?? '') }}" placeholder="https://www.youtube.com/embed/VIDEO_ID">
+                            <small class="text-muted">Paste embed URL for featured video on homepage.</small>
+                        </div>
+                        <div class="form-group">
+                            <label>YouTube Channel URL</label>
+                            <input type="url" name="youtube_channel_url" class="form-control" value="{{ old('youtube_channel_url', $page->settings['youtube_channel_url'] ?? '') }}" placeholder="https://www.youtube.com/@suicidesquad11.52">
+                        </div>
+
+                        <hr><h5>Footer</h5>
                         <div class="form-group">
                             <label>Footer Description</label>
                             <textarea name="footer_description" class="form-control" rows="2">{{ old('footer_description', $page->settings['footer_description'] ?? '') }}</textarea>
@@ -42,7 +69,24 @@
                         <div class="form-group">
                             <label>Footer Copyright</label>
                             <input type="text" name="footer_copyright" class="form-control" value="{{ old('footer_copyright', $page->settings['footer_copyright'] ?? '') }}">
+                            <small class="text-muted">Year {{ date('Y') }} is appended automatically on the frontend.</small>
                         </div>
+
+                        @include('admin.pages.partials.partner_logos', [
+                            'links' => old('partner_logos', $page->settings['partner_logos'] ?? []),
+                            'heroImages' => old('hero_images', $page->settings['hero_images'] ?? [
+                                'frontend/assets/img/hero1.jpg',
+                                'frontend/assets/img/hero2.JPG',
+                                'frontend/assets/img/hero3.jpg',
+                            ]),
+                        ])
+                        @include('admin.pages.partials.social_links', ['links' => old('social_links', $page->settings['social_links'] ?? [])])
+                    @elseif($page->slug === 'contact')
+                        <div class="form-group">
+                            <label>Content</label>
+                            <textarea name="content" id="content" class="form-control" rows="8">{{ old('content', $page->content) }}</textarea>
+                        </div>
+                        @include('admin.pages.partials.social_links', ['links' => old('social_links', $page->settings['social_links'] ?? [])])
                     @else
                         <div class="form-group">
                             <label>Content</label>
@@ -50,14 +94,7 @@
                         </div>
                     @endif
 
-                    @if($page->slug === 'contact')
-                        <div class="form-group">
-                            <label>Social Links (JSON)</label>
-                            <textarea name="settings_json" class="form-control" rows="10">{{ old('settings_json', json_encode($page->settings ?? [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)) }}</textarea>
-                            <small class="text-muted">Format: {"social_links":[{"platform":"...","icon":"bxl-...","handle":"...","url":"..."}]}</small>
-                        </div>
-                    @endif
-
+                    <hr>
                     <div class="form-group">
                         <label>Meta Title (SEO)</label>
                         <input type="text" name="meta_title" class="form-control" value="{{ old('meta_title', $page->meta_title) }}">

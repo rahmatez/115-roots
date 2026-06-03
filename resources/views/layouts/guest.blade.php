@@ -26,7 +26,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     {{-- <div class="login-logo">
-        <a href="/">Dewiga Admin</a>
+        <a href="/">Suicide Squad 11.5 Admin</a>
     </div> --}}
     <!-- /.login-logo -->
     <div class="card">

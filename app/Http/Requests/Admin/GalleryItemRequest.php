@@ -22,6 +22,7 @@ class GalleryItemRequest extends FormRequest
             'image' => $imageRule,
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'is_published' => ['nullable', 'boolean'],
+            'event_id' => ['nullable', 'exists:events,id'],
         ];
     }
 }

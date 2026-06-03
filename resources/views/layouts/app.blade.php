@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard Admin Dewiga</title>
+    <title>@yield('title', 'Admin') | Suicide Squad 11.5</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"

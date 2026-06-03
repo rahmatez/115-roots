@@ -8,10 +8,6 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::dropIfExists('bookings');
-        Schema::dropIfExists('galleries');
-        Schema::dropIfExists('travel_packages');
-
         Schema::create('gallery_items', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
@@ -58,33 +54,5 @@ return new class extends Migration
         Schema::dropIfExists('contact_messages');
         Schema::dropIfExists('pages');
         Schema::dropIfExists('gallery_items');
-
-        Schema::create('travel_packages', function (Blueprint $table) {
-            $table->id();
-            $table->string('type');
-            $table->string('slug')->unique();
-            $table->string('location');
-            $table->integer('price');
-            $table->text('description');
-            $table->timestamps();
-        });
-
-        Schema::create('galleries', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('images');
-            $table->foreignId('travel_package_id')->constrained()->cascadeOnDelete();
-            $table->timestamps();
-        });
-
-        Schema::create('bookings', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('number_phone');
-            $table->string('date');
-            $table->foreignId('travel_package_id')->constrained()->cascadeOnDelete();
-            $table->timestamps();
-        });
     }
 };

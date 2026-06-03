@@ -73,6 +73,7 @@
             <h2 class="section__title" style="text-align:center;margin-bottom:1.5rem;">Send us a message</h2>
             <form id="myForm" class="contact-form" style="max-width:600px;margin:0 auto;">
                 @csrf
+                <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">
                 <div class="form-group mb-3">
                     <input type="text" name="name" class="form-control" placeholder="Your Name" required>
                 </div>

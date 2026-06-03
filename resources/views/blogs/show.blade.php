@@ -57,7 +57,7 @@
                                 </li>
                                 <li>
                                     <a
-                                        href="https://twitter.com/intent/tweet?text=YOUR_TITLE&url={{ route('blog.show', $blog->slug) }}">
+                                        href="https://twitter.com/intent/tweet?text={{ urlencode($blog->title) }}&url={{ urlencode(route('blog.show', $blog->slug)) }}">
                                         <i class="bx bxl-twitter"></i>
                                     </a>
                                 </li>
@@ -84,7 +84,7 @@
                     </div>
 
                 </div>
-                <div class="package-travel">
+                <div class="blog-sidebar">
                     <h3>Favorite Category</h3>
                     <ul>
                         @foreach ($categories as $category)

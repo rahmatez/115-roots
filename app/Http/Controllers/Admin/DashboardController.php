@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Event;
 use App\Models\GalleryItem;
+use App\Models\Product;
 use App\Models\ContactMessage;
 use App\Http\Controllers\Controller;
 
@@ -15,6 +17,8 @@ class DashboardController extends Controller
         $stats = [
             'blogs' => Blog::count(),
             'categories' => Category::count(),
+            'products' => Product::count(),
+            'events' => Event::count(),
             'gallery_items' => GalleryItem::count(),
             'contact_new' => ContactMessage::where('status', ContactMessage::STATUS_NEW)->count(),
             'contact_total' => ContactMessage::count(),

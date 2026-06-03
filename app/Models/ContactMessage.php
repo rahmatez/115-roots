@@ -20,6 +20,12 @@ class ContactMessage extends Model
         'subject',
         'message',
         'status',
+        'admin_reply',
+        'replied_at',
+    ];
+
+    protected $casts = [
+        'replied_at' => 'datetime',
     ];
 
     public function scopeNewest(Builder $query): Builder

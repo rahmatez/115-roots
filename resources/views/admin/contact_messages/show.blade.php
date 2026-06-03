@@ -21,6 +21,13 @@
                     <p><strong>Date:</strong> {{ $message->created_at->format('d M Y H:i') }}</p>
                     <hr>
                     <p>{{ $message->message }}</p>
+
+                    @if($message->admin_reply)
+                        <hr>
+                        <p><strong>Your reply ({{ $message->replied_at?->format('d M Y H:i') }}):</strong></p>
+                        <p>{{ $message->admin_reply }}</p>
+                    @endif
+
                     <hr>
                     <form method="post" action="{{ route('admin.contact_messages.update', $message) }}">
                         @csrf @method('PUT')
@@ -33,6 +40,16 @@
                             </select>
                         </div>
                         <button type="submit" class="btn btn-success">Update Status</button>
+                    </form>
+
+                    <hr>
+                    <h5>Reply via Email</h5>
+                    <form method="post" action="{{ route('admin.contact_messages.reply', $message) }}">
+                        @csrf
+                        <div class="form-group">
+                            <textarea name="reply_body" class="form-control" rows="5" required placeholder="Write your reply...">{{ old('reply_body') }}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Reply</button>
                     </form>
                 </div>
             </div>

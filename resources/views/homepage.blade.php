@@ -1,352 +1,400 @@
 @extends('layouts.frontend')
 
+@section('meta')
+    <meta name="description" content="{{ $siteSettings?->meta_description ?? 'Eleven Five Roots — Suicide Squad 11.5 supporter community for PSS Sleman.' }}">
+    <meta property="og:title" content="{{ $siteSettings?->meta_title ?? 'Eleven Five Roots' }}">
+    <meta property="og:description" content="{{ $siteSettings?->meta_description ?? 'Unite To Empower — Supporter community for PSS Sleman.' }}">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:type" content="website">
+@endsection
+
 @section('content')
+    @if(!empty($siteSettings?->settings['announcement_active']) && !empty($siteSettings?->settings['announcement_text']))
+        <div class="homepage-announcement">
+            @if(!empty($siteSettings->settings['announcement_url']))
+                <a href="{{ $siteSettings->settings['announcement_url'] }}">{{ $siteSettings->settings['announcement_text'] }}</a>
+            @else
+                {{ $siteSettings->settings['announcement_text'] }}
+            @endif
+        </div>
+    @endif
+
+    {{-- Hero Section --}}
+    @php
+        $heroImages = $siteSettings?->settings['hero_images'] ?? [
+            'frontend/assets/img/hero1.jpg',
+            'frontend/assets/img/hero2.JPG',
+            'frontend/assets/img/hero3.jpg',
+        ];
+    @endphp
     <div class="hero">
-        <img class="lazy_img emblem" data-src="{{ asset('frontend/assets/img/logo/EMBLEM.png') }}" alt="">
-        <h1>{{ $siteSettings?->settings['hero_title'] ?? 'SUICIDE SQUAD 11.5' }}</h1>
-        <p>{!! nl2br(e($siteSettings?->settings['hero_subtitle'] ?? "Here we pour out our feelings\nabout love and anger for pride.")) !!}</p>
+        <img class="lazy_img emblem" data-src="{{ asset('frontend/assets/img/logo/EMBLEM.png') }}" alt="Eleven Five Roots">
+        <h1>{{ $siteSettings?->settings['hero_title'] ?? 'Eleven Five Roots' }}</h1>
+        <p>{!! nl2br(e($siteSettings?->settings['hero_subtitle'] ?? 'Unite To Empower')) !!}</p>
 
         <div class="background-hero">
-            <img class="lazy_img hero-bg show-hero" data-src="{{ asset('frontend/assets/img/hero1.jpg') }}" alt="">
-            <img class="lazy_img hero-bg" data-src="{{ asset('frontend/assets/img/hero2.jpg') }}" alt="">
-            <img class="lazy_img hero-bg" data-src="{{ asset('frontend/assets/img/hero3.jpg') }}" alt="">
+            @foreach($heroImages as $index => $heroImage)
+                <img class="lazy_img hero-bg {{ $index === 0 ? 'show-hero' : '' }}"
+                    data-src="{{ asset($heroImage) }}" alt="">
+            @endforeach
         </div>
     </div>
-    <!--==================== HOME ====================-->
-    {{-- <section>
-        <div class="swiper-container">
-            <div>
-                <!--========== ISLANDS 1 ==========-->
-                <section class="islands">
-                    <img data-src="{{ asset('frontend/assets/img/bajak.jpg') }}" alt="" class="islands__bg" />
-                    <div class="bg__overlay">
-                        <div class="islands__container container">
-                            <div class="islands__data" style="z-index: 99; position: relative">
-                                <h2 class="islands__subtitle">
-                                    Explore
-                                </h2>
-                                <h1 class="islands__title">
-                                    Living Traditions, <br>Timeless Experiences
-                                </h1>
-                                <p class="islands__description">
-                                    This is a great time travel and enjoy <br />
-                                    the magic of tradition.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-    </section> --}}
 
-    <!--==================== VALUE ====================-->
+    @php
+        $partnerLogos = $siteSettings?->settings['partner_logos'] ?? [];
+    @endphp
+    @if(!empty($partnerLogos))
+        <section class="logos hero-logos">
+            <div class="logos__container container grid">
+                @foreach($partnerLogos as $logo)
+                    <div class="logos__img">
+                        @if(!empty($logo['url']))
+                            <a href="{{ $logo['url'] }}" target="_blank" rel="noopener">
+                                <img src="{{ asset($logo['image']) }}" alt="{{ $logo['name'] ?? '' }}">
+                            </a>
+                        @else
+                            <img src="{{ asset($logo['image']) }}" alt="{{ $logo['name'] ?? '' }}">
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        </section>
+    @endif
+
+    {{-- 3. About / Introduction --}}
     <section class="value section" id="value">
         <div class="value__container container grid">
             <div class="values__images">
                 <div class="value__orbe"></div>
-
                 <div class="value__img">
-                    <img class="lazy_img" data-src="{{ asset('frontend/assets/img/value-img.jpg') }}" alt="" />
+                    <img class="lazy_img" data-src="{{ asset('frontend/assets/img/value-img.JPG') }}" alt="" />
                 </div>
             </div>
 
             <div class="value__content">
                 <div class="value__data">
-                    <span class="section__subtitle">Who We Are</span>
-                    <h2 class="section__title">
-                        SUICIDE SQUAD 11.5
-                    </h2>
-                    <p class="value__description">
-                        "Suicide Squad 11.5" is a community of supporters dedicated to the PSS Sleman football club. The
-                        name "Suicide Squad 11.5" describes the enthusiasm and courage of its members in supporting their
-                        favorite team.
-                    </p>
-                    <p class="value__description">
-                        "Suicide Squad 11.5" is not just a supporter group, but also a family for its members. We provide a
-                        platform for the exchange of ideas, experiences and social activities that strengthen relationships
-                        among fellow football fans. With a spirit of togetherness and high dedication, we continue to be an
-                        important pillar in maintaining the Sleman football tradition.
-                    </p>
-                </div>
-
-                {{-- <div class="value__accordion">
-                    <div class="value__accordion-item">
-                        <header class="value__accordion-header">
-                            <i class="bx bxs-shield-x value-accordion-icon"></i>
-                            <h3 class="value__accordion-title">
-                                Pleasant Village
-                            </h3>
-                            <div class="value__accordion-arrow">
-                                <i class="bx bxs-down-arrow"></i>
-                            </div>
-                        </header>
-
-                        <div class="value__accordion-content">
-                            <p class="value__accordion-description">
-                                We provide an interesting experience about village life and its simplicity.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="value__accordion-item">
-                        <header class="value__accordion-header">
-                            <i class="bx bxs-x-square value-accordion-icon"></i>
-                            <h3 class="value__accordion-title">
-                                Affordable price for you
-                            </h3>
-                            <div class="value__accordion-arrow">
-                                <i class="bx bxs-down-arrow"></i>
-                            </div>
-                        </header>
-
-                        <div class="value__accordion-content">
-                            <p class="value__accordion-description">
-                                We try to accommodate your budget because holidays don't have to be expensive.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="value__accordion-item">
-                        <header class="value__accordion-header">
-                            <i class="bx bxs-bar-chart-square value-accordion-icon"></i>
-                            <h3 class="value__accordion-title">
-                                Best plan for your time
-                            </h3>
-                            <div class="value__accordion-arrow">
-                                <i class="bx bxs-down-arrow"></i>
-                            </div>
-                        </header>
-
-                        <div class="value__accordion-content">
-                            <p class="value__accordion-description">
-                                We will provide various activities related to rural life that will leave an impression on
-                                your life.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="value__accordion-item">
-                        <header class="value__accordion-header">
-                            <i class="bx bxs-check-square value-accordion-icon"></i>
-                            <h3 class="value__accordion-title">
-                                Security guarantee
-                            </h3>
-                            <div class="value__accordion-arrow">
-                                <i class="bx bxs-down-arrow"></i>
-                            </div>
-                        </header>
-
-                        <div class="value__accordion-content">
-                            <p class="value__accordion-description">
-                                We make sure that our services have a
-                                good of security
-                            </p>
-                        </div>
+                    <span class="section__subtitle">{{ $aboutPage?->subtitle ?? 'Who We Are' }}</span>
+                    <h2 class="section__title">{{ $aboutPage?->title ?? 'SUICIDE SQUAD 11.5' }}</h2>
+                    <div class="value__description">
+                        {!! $aboutPage?->content ?? '<p>Suicide Squad 11.5 is a community of supporters dedicated to PSS Sleman.</p>' !!}
                     </div>
                 </div>
-                <a href="{{ route('about-us') }}">
-                    <button class="button contact__card-button learn_more">Learn More</button>
-                </a> --}}
             </div>
         </div>
     </section>
 
-    <!-- blog -->
+    {{-- Shop Section --}}
+    @if($products->isNotEmpty())
+        <section class="section" id="shop">
+            <div class="container">
+                <span class="section__subtitle" style="text-align: center">Best Choice</span>
+                <h2 class="section__title" style="text-align: center">Our Shop</h2>
+
+                <div class="popular__container swiper">
+                    <div class="swiper-wrapper">
+                        @foreach($products as $product)
+                            <article class="popular__card swiper-slide">
+                                <a href="{{ $product->external_url ?: route('shop.show', $product->slug) }}">
+                                    <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" class="popular__img">
+                                    <div class="popular__data">
+                                        <h2 class="popular__price">
+                                            <span>{{ $product->currency }}</span> {{ $product->formattedPrice() }}
+                                        </h2>
+                                        <h3 class="popular__title">{{ $product->name }}</h3>
+                                        @if($product->category)
+                                            <p class="popular__description">{{ $product->category }}</p>
+                                        @endif
+                                    </div>
+                                </a>
+                            </article>
+                        @endforeach
+                    </div>
+                    <div class="swiper-button-next"><i class="bx bx-chevron-right"></i></div>
+                    <div class="swiper-button-prev"><i class="bx bx-chevron-left"></i></div>
+                </div>
+                <div style="text-align:center;margin-top:2rem;">
+                    <a href="{{ route('shop.index') }}" class="button">View All Products</a>
+                </div>
+            </div>
+        </section>
+    @endif
+
+    @if($upcomingEvents->isNotEmpty())
+        <section class="blog section" id="events">
+            <div class="blog__container container">
+                <span class="section__subtitle" style="text-align: center">Agenda</span>
+                <h2 class="section__title" style="text-align: center">Upcoming Events</h2>
+                <div class="blog-list">
+                    @foreach($upcomingEvents as $event)
+                        <article class="blog-list__item">
+                            <div class="blog-list__body">
+                                <a href="{{ route('events.show', $event->slug) }}">
+                                    <h3 class="blog-list__title">{{ $event->title }}</h3>
+                                </a>
+                                <p class="blog-list__excerpt">
+                                    <i class="bx bx-calendar"></i> {{ $event->event_date->format('d M Y H:i') }}
+                                    @if($event->location) · <i class="bx bx-map"></i> {{ $event->location }} @endif
+                                </p>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+                <div class="blog-list__more">
+                    <a href="{{ route('events.index') }}" class="button">View All Events</a>
+                </div>
+            </div>
+        </section>
+    @endif
+
+    {{-- Blog / News --}}
     <section class="blog section" id="blog">
         <div class="blog__container container">
             <span class="section__subtitle" style="text-align: center">Our Blog</span>
-            <h2 class="section__title" style="text-align: center">
-                Speech For The Pride
-            </h2>
+            <h2 class="section__title" style="text-align: center">Speech For The Pride</h2>
 
-            <div class="blog__content grid">
-                @foreach ($blogs as $blog)
-                    <article class="blog__card">
-                        <div class="blog__image">
-                            <img data-src="{{ Storage::url($blog->image) }}" alt="" class="blog__img lazy_img" />
-                            <a href="{{ route('blog.show', $blog->slug) }}" class="blog__button">
-                                <i class="bx bx-right-arrow-alt"></i>
-                            </a>
-                        </div>
-
-                        <div class="blog__data">
+            <div class="blog-list">
+                @forelse ($blogs as $blog)
+                    <article class="blog-list__item">
+                        <a href="{{ route('blog.show', $blog->slug) }}" class="blog-list__thumb-link">
+                            <img src="{{ Storage::url($blog->image) }}" alt="{{ $blog->title }}" class="blog-list__thumb">
+                        </a>
+                        <div class="blog-list__body">
                             <a href="{{ route('blog.show', $blog->slug) }}">
-                                <h2 class="blog__title">
-                                    {{ $blog->title }}
-                                </h2>
+                                <h3 class="blog-list__title">{{ $blog->title }}</h3>
                             </a>
-                            <p class="blog__description">
-                                {{ $blog->excerpt }}
-                            </p>
-
-                            <div class="blog__footer">
-                                <div class="blog__reaction">
-                                    {{ date('d M Y', strtotime($blog->created_at)) }}
-                                </div>
-                                <div class="blog__reaction">
+                            <p class="blog-list__excerpt">{{ $blog->excerpt }}</p>
+                            <div class="blog-list__meta">
+                                <span class="blog__reaction">
+                                    {{ $blog->published_at?->format('d M Y') ?? $blog->created_at->format('d M Y') }}
+                                </span>
+                                <span class="blog__reaction">
                                     <i class="bx bx-show"></i>
                                     <span>{{ $blog->reads }}</span>
-                                </div>
-                                <a>
-                                    <button data-title="{{ $blog->title }}"
-                                        data-route="{{ route('blog.show', $blog->slug) }}"
-                                        class="blog__reaction share-button">
-                                        <i class="bx bx-share-alt"></i>
-                                        <span>Share</span>
-                                    </button>
-                                </a>
+                                </span>
+                                <button type="button" class="blog-list__share share-button"
+                                    data-title="{{ $blog->title }}"
+                                    data-route="{{ route('blog.show', $blog->slug) }}">
+                                    <i class="bx bx-share-alt"></i>
+                                    <span>Share</span>
+                                </button>
                             </div>
                         </div>
                     </article>
-                @endforeach
+                @empty
+                    <p class="blog-list__empty">No articles yet.</p>
+                @endforelse
+            </div>
+
+            <div class="blog-list__more">
+                <a href="{{ route('blog.index') }}" class="button">Article More</a>
             </div>
         </div>
     </section>
 
-    <!--==================== Slider Image (static — tidak dari admin) ====================-->
+    {{-- Gallery slider --}}
+    @php
+        $staticGallery = ['gal-1.jpg', 'gal-2.jpg', 'gal-3.jpg', 'gal-4.jpg', 'gal-5.jpg'];
+        if ($galleryPreview->isNotEmpty()) {
+            $gallerySlides = $galleryPreview->concat($galleryPreview)->concat($galleryPreview);
+            $useStorage = true;
+        } else {
+            $gallerySlides = collect(array_merge($staticGallery, $staticGallery, $staticGallery));
+            $useStorage = false;
+        }
+    @endphp
     <div class="tz-gallery">
         <div class="slideshow-img">
             <div class="gallery-slider-pot">
                 <div class="slide-track-pot">
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-1.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-1.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-2.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-2.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-3.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-3.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-4.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-4.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-5.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-5.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-1.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-1.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-2.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-2.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-3.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-3.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-4.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-4.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-1.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-1.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-2.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-2.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-3.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-3.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-4.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-4.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-5.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-5.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-1.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-1.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-2.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-2.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-3.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-3.jpg') }}" alt="">
-                        </a>
-                    </div>
-                    <div class="slide-item-pot">
-                        <a class="lightbox" href="{{ asset('frontend/assets/img/gal-4.jpg') }}">
-                            <img src="{{ asset('frontend/assets/img/gal-4.jpg') }}" alt="">
-                        </a>
-                    </div>
+                    @foreach($gallerySlides as $item)
+                        <div class="slide-item-pot">
+                            <a class="lightbox" href="{{ $useStorage ? Storage::url($item->image) : asset('frontend/assets/img/' . $item) }}">
+                                <img src="{{ $useStorage ? Storage::url($item->image) : asset('frontend/assets/img/' . $item) }}"
+                                    alt="{{ $useStorage ? ($item->title ?? 'Gallery') : 'Gallery' }}">
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 
-    <!--==================== VIDEO EMBED ====================-->
-    <section class="container">
+    {{-- YouTube video --}}
+    @php
+        $youtubeEmbed = $siteSettings?->settings['youtube_embed_url']
+            ?? 'https://www.youtube.com/embed/fLLJzNB15mI?si=CY6u_7UdphzYDAB2';
+    @endphp
+    <section class="container section" id="video">
         <div class="video-section">
-            <iframe class="youtube-video" src="https://www.youtube.com/embed/fLLJzNB15mI?si=CY6u_7UdphzYDAB2"
+            <iframe class="youtube-video" src="{{ $youtubeEmbed }}"
                 title="YouTube video player" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
         </div>
+        @if(!empty($siteSettings?->settings['youtube_channel_url']))
+            <p class="video-section__channel">
+                <a href="{{ $siteSettings->settings['youtube_channel_url'] }}" target="_blank" rel="noopener">
+                    Subscribe on YouTube
+                </a>
+            </p>
+        @endif
     </section>
 
     <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         let headerBackground = document.querySelectorAll(".hero-bg");
-
         let imageIndex = 0;
-
         function changeBackground() {
+            if (!headerBackground.length) return;
             headerBackground[imageIndex].classList.remove("show-hero");
-            imageIndex++;
-
-            if (imageIndex >= headerBackground.length) {
-                imageIndex = 0;
-            }
-
-            headerBackground[imageIndex].classList.add("show-hero")
+            imageIndex = (imageIndex + 1) % headerBackground.length;
+            headerBackground[imageIndex].classList.add("show-hero");
         }
         setInterval(changeBackground, 3000);
 
-        // share button
-
-        $(document).ready(function() {
-            let shareButton = $('.share-button')
-
-            shareButton.on('click', function() {
-                if (navigator.share) {
-                    navigator.share({
-                            title: $(this).data('title'),
-                            url: $(this).data('route')
-                        }).then(() => {
-                            console.log('Thanks for sharing!');
-                        })
-                        .catch(console.error);
-                } else {
-                    $(this).addClass('is-open');
-                }
-            })
-        })
+        $('.share-button').on('click', function() {
+            const title = $(this).data('title');
+            const url = $(this).data('route');
+            if (navigator.share) {
+                navigator.share({ title, url }).catch(() => {});
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(url);
+                $(this).find('span').text('Copied!');
+                setTimeout(() => $(this).find('span').text('Share'), 2000);
+            }
+        });
     </script>
 @endsection
+
+@push('style-alt')
+<style>
+    .homepage-announcement {
+        margin-top: 5rem;
+        padding: 0.75rem 1rem;
+        text-align: center;
+        background: rgba(62, 100, 255, 0.15);
+        border-bottom: 1px solid var(--border-color);
+        color: var(--title-color);
+    }
+
+    .homepage-announcement a { color: inherit; }
+
+    .hero-logos {
+        margin-top: -4rem;
+        padding-bottom: 2rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-logos .logos__img img {
+        opacity: 0.85;
+        height: 48px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .blog-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        max-width: 900px;
+        margin: 2rem auto 0;
+    }
+
+    .blog-list__item {
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+        padding: 1.75rem 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .blog-list__item:last-child {
+        border-bottom: none;
+    }
+
+    .blog-list__thumb-link {
+        flex-shrink: 0;
+    }
+
+    .blog-list__thumb {
+        width: 110px;
+        height: 110px;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+
+    .blog-list__title {
+        font-size: 1.125rem;
+        margin-bottom: 0.5rem;
+        color: var(--title-color);
+        transition: color 0.3s;
+    }
+
+    .blog-list__title:hover {
+        color: var(--first-color-light);
+    }
+
+    .blog-list__excerpt {
+        font-size: 0.875rem;
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+        color: var(--text-color);
+    }
+
+    .blog-list__meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .blog-list__share {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        background: none;
+        border: none;
+        color: var(--text-color-light);
+        font-size: 0.813rem;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .blog-list__share:hover {
+        color: var(--first-color-light);
+    }
+
+    .blog-list__more {
+        text-align: center;
+        margin-top: 2.5rem;
+    }
+
+    .blog-list__empty {
+        text-align: center;
+        padding: 2rem 0;
+        color: var(--text-color-light);
+    }
+
+    .video-section__channel {
+        text-align: center;
+        margin: 1rem 0 2rem;
+    }
+
+    .video-section__channel {
+        text-align: center;
+        margin: 1rem 0 2rem;
+    }
+
+    @media screen and (max-width: 576px) {
+        .blog-list__item {
+            flex-direction: column;
+        }
+
+        .blog-list__thumb {
+            width: 100%;
+            height: 180px;
+        }
+    }
+</style>
+@endpush

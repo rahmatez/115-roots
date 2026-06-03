@@ -7,13 +7,16 @@
 
 
     <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="Suicide Squad" />
-    <meta property="og:url" content="https://115roots.com" />
-    <meta property="og:site_name" content="Suicide Squad" />
-    <meta property="og:image" content="">
-
-    <!--=============== BOXICONS ===============-->
+    <meta property="og:site_name" content="Suicide Squad 11.5" />
+    <meta property="og:image" content="{{ asset('frontend/assets/img/logo/EMBLEM.png') }}">
+    @hasSection('meta')
+        @yield('meta')
+    @else
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Suicide Squad 11.5" />
+        <meta property="og:url" content="{{ url()->current() }}" />
+        <meta property="og:description" content="Supporter community for PSS Sleman." />
+    @endif
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 
     <!--=============== SWIPER CSS ===============-->
@@ -23,9 +26,9 @@
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.css">
     @stack('style-alt')
-    @yield('meta')
     <title>@yield('title', 'Suicide Squad 11.5 | Born From Blood')</title>
 
+    <link rel="alternate" type="application/rss+xml" title="Suicide Squad 11.5 RSS" href="{{ route('feed') }}">
     {{-- Favicon --}}
     <link rel="shortcut icon" href="{{ asset('frontend/assets/favicon/favicon.ico') }}" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('frontend/assets/favicon/apple-touch-icon.png') }}">
@@ -41,7 +44,7 @@
     <header class="header" id="header">
         <nav class="nav container">
             <a href="{{ route('homepage') }}" class="nav__logo"><img class="brand-logo"
-                    src="{{ asset('frontend/assets/img/logo/logo-ss-white.png') }}" alt="" srcset=""></a>
+                    src="{{ asset('frontend/assets/img/logo/logo-ss-white.png') }}" alt="Eleven Five Roots" srcset=""></a>
 
             <div class="nav__menu">
                 <ul class="nav__list">
@@ -53,10 +56,24 @@
                         </a>
                     </li>
                     <li class="nav__item">
+                        <a href="{{ route('shop.index') }}"
+                            class="nav__link {{ request()->is('shop') || request()->is('shop/*') ? ' active-link' : '' }}">
+                            <i class="bx bx-store"></i>
+                            <span>Shop</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
                         <a href="{{ route('blog.index') }}"
                             class="nav__link {{ request()->is('blogs') || request()->is('blogs/*') ? ' active-link' : '' }}">
                             <i class="bx bx-book"></i>
                             <span>Blog</span>
+                        </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="{{ route('events.index') }}"
+                            class="nav__link {{ request()->is('events') || request()->is('events/*') ? ' active-link' : '' }}">
+                            <i class="bx bx-calendar"></i>
+                            <span>Events</span>
                         </a>
                     </li>
                     <li class="nav__item">
@@ -96,7 +113,7 @@
             <div>
                 <a href="{{ route('homepage') }}" class="footer__logo">
                     <img class="footer-logo" src="{{ asset('frontend/assets/img/logo/EMBLEM.PNG') }}"
-                        alt="Desa Gabugan" srcset="">
+                        alt="Suicide Squad 11.5" srcset="">
                 </a>
                 <p class="footer__description">
                     {{ $siteSettings?->settings['footer_description'] ?? 'Our vision is to provide the best service and share the best experience for many people' }}
@@ -108,9 +125,12 @@
                     <h3 class="footer__title">About</h3>
 
                     <ul class="footer__links">
-                        {{-- <li>
+                        <li>
                             <a href="{{ route('about-us') }}" class="footer__link">About Us</a>
-                        </li> --}}
+                        </li>
+                        <li>
+                            <a href="{{ route('shop.index') }}" class="footer__link">Shop</a>
+                        </li>
                         <li>
                             <a href="{{ route('gallery') }}" class="footer__link">Gallery</a>
                         </li>
@@ -124,7 +144,7 @@
 
                     <ul class="footer__links">
                         <li>
-                            <a href="#" class="footer__link">FAQs </a>
+                            <a href="{{ route('faqs') }}" class="footer__link">FAQs</a>
                         </li>
                         {{-- <li>
                             <a href="#" class="footer__link">Support center
@@ -151,7 +171,7 @@
 
         <div class="footer__info container">
             <span class="footer__copy">
-                &#169; {{ $siteSettings?->settings['footer_copyright'] ?? 'SUICIDE SQUAD 11.5. All rights reserved.' }}
+                &#169; {{ $siteSettings?->settings['footer_copyright'] ?? 'SUICIDE SQUAD 11.5. All rights reserved.' }} {{ date('Y') }}
             </span>
             <div class="footer__privacy">
                 {{-- <a href="#">Terms & Agreements</a>

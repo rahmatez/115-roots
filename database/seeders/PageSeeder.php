@@ -12,11 +12,22 @@ class PageSeeder extends Seeder
         Page::updateOrCreate(
             ['slug' => 'about'],
             [
-                'title' => 'About Us',
-                'subtitle' => 'SUICIDE SQUAD 11.5',
+                'title' => 'SUICIDE SQUAD 11.5',
+                'subtitle' => 'Who We Are',
                 'content' => '<p>"Suicide Squad 11.5" is a community of supporters dedicated to the PSS Sleman football club. The name describes the enthusiasm and courage of its members in supporting their favorite team.</p><p>We are not just a supporter group, but also a family for our members — a platform for exchanging ideas, experiences, and social activities that strengthen relationships among fellow football fans.</p>',
                 'meta_title' => 'About Us | Suicide Squad 11.5',
                 'meta_description' => 'Learn about Suicide Squad 11.5, the supporter community for PSS Sleman.',
+            ]
+        );
+
+        Page::updateOrCreate(
+            ['slug' => 'faqs'],
+            [
+                'title' => 'Frequently Asked Questions',
+                'subtitle' => 'Help Center',
+                'content' => '<p><strong>What is Suicide Squad 11.5?</strong></p><p>We are a supporter community for PSS Sleman, united under the Eleven Five Roots banner.</p><p><strong>How can I join events?</strong></p><p>Check the Events page or follow our social media for the latest nobar, away day, and gathering schedules.</p><p><strong>Where can I buy merchandise?</strong></p><p>Visit our Shop page for official supporter merchandise and gear.</p><p><strong>How do I contact the team?</strong></p><p>Use the Contact page or reach us via social media links in the footer.</p>',
+                'meta_title' => 'FAQs | Suicide Squad 11.5',
+                'meta_description' => 'Frequently asked questions about Suicide Squad 11.5 supporter community.',
             ]
         );
 
@@ -45,16 +56,33 @@ class PageSeeder extends Seeder
                 'title' => 'Site Settings',
                 'subtitle' => null,
                 'content' => null,
+                'meta_title' => 'Eleven Five Roots | Suicide Squad 11.5',
+                'meta_description' => 'Unite To Empower — Supporter community for PSS Sleman.',
                 'settings' => [
-                    'hero_title' => 'SUICIDE SQUAD 11.5',
-                    'hero_subtitle' => 'Here we pour out our feelings about love and anger for pride.',
+                    'hero_title' => 'Eleven Five Roots',
+                    'hero_subtitle' => 'Unite To Empower',
+                    'hero_images' => [
+                        'frontend/assets/img/hero1.jpg',
+                        'frontend/assets/img/hero2.JPG',
+                        'frontend/assets/img/hero3.jpg',
+                    ],
                     'footer_description' => 'Our vision is to provide the best service and share the best experience for many people',
                     'footer_copyright' => 'SUICIDE SQUAD 11.5. All rights reserved.',
+                    'partner_logos' => [
+                        ['name' => '11.5 CREW', 'image' => 'frontend/assets/img/logo/logo-ss-white.png', 'url' => ''],
+                        ['name' => 'ELEVEN 5', 'image' => 'frontend/assets/img/logo/emblem w.png', 'url' => ''],
+                        ['name' => 'Suicide Squad', 'image' => 'frontend/assets/img/logo/EMBLEM.png', 'url' => ''],
+                    ],
                     'social_links' => [
                         ['platform' => 'Twitter', 'url' => 'https://twitter.com/suicidesquad76', 'icon' => 'bxl-twitter'],
                         ['platform' => 'Instagram', 'url' => 'https://www.instagram.com/suicidesquad11.5/', 'icon' => 'bxl-instagram-alt'],
                         ['platform' => 'Youtube', 'url' => 'https://www.youtube.com/@suicidesquad11.52', 'icon' => 'bxl-youtube'],
                     ],
+                    'announcement_active' => false,
+                    'announcement_text' => '',
+                    'announcement_url' => '',
+                    'youtube_embed_url' => 'https://www.youtube.com/embed/fLLJzNB15mI?si=CY6u_7UdphzYDAB2',
+                    'youtube_channel_url' => 'https://www.youtube.com/@suicidesquad11.52',
                 ],
             ]
         );

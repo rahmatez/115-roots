@@ -15,16 +15,28 @@
                 </div>
             </div>
         </div>
-        <div class="gallery-title">
-            <h2>Explore</h2>
-            <h1>Gallery</h1>
-        </div>
     </section>
 
     <section class="section">
         <div class="container">
+            @if($events->isNotEmpty())
+                <form method="get" class="mb-4" style="text-align:center;">
+                    <select name="event" onchange="this.form.submit()" style="padding:.5rem 1rem;border-radius:4px;">
+                        <option value="">All albums</option>
+                        @foreach($events as $event)
+                            <option value="{{ $event->id }}" {{ (string) request('event') === (string) $event->id ? 'selected' : '' }}>
+                                {{ $event->title }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
+                @if($selectedEvent)
+                    <p style="color:#fff;text-align:center;margin-bottom:1.5rem;">Album: <strong>{{ $selectedEvent->title }}</strong></p>
+                @endif
+            @endif
+
             @if($galleryItems->isEmpty())
-                <p class="text-center" style="color: #fff; padding: 2rem;">Belum ada foto galeri. Silakan cek kembali nanti.</p>
+                <p class="text-center" style="color: #fff; padding: 2rem;">No gallery photos yet. Please check back later.</p>
             @else
                 <div class="tz-gallery">
                     <div class="row">
@@ -36,6 +48,11 @@
                                 @if($item->title)
                                     <p style="color:#fff;text-align:center;margin-top:0.5rem;">{{ $item->title }}</p>
                                 @endif
+                                @if($item->event && ! $selectedEvent)
+                                    <p style="color:#ccc;text-align:center;font-size:.85rem;">
+                                        <a href="{{ route('gallery', ['event' => $item->event_id]) }}" style="color:#ccc;">{{ $item->event->title }}</a>
+                                    </p>
+                                @endif
                             </div>
                         @endforeach
                     </div>
@@ -46,7 +63,5 @@
 @endsection
 
 @push('style-alt')
-<style>
-    .tz-gallery a { display: block; }
-</style>
+<style>.tz-gallery a { display: block; }</style>
 @endpush

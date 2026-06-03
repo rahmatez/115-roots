@@ -30,6 +30,15 @@
                         <input type="file" name="image" class="form-control">
                     </div>
                     <div class="form-group">
+                        <label>Event Album (optional)</label>
+                        <select name="event_id" class="form-control">
+                            <option value="">— No event —</option>
+                            @foreach($events as $event)
+                                <option value="{{ $event->id }}" {{ old('event_id', $galleryItem->event_id) == $event->id ? 'selected' : '' }}>{{ $event->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label>Sort Order</label>
                         <input type="number" name="sort_order" class="form-control" value="{{ old('sort_order', $galleryItem->sort_order) }}" min="0">
                     </div>

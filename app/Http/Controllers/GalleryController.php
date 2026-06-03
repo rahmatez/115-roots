@@ -2,14 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\GalleryItem;
+use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $galleryItems = GalleryItem::published()->ordered()->get();
+        $events = Event::published()->orderByDesc('event_date')->get(['id', 'title', 'slug']);
 
-        return view('gallery', compact('galleryItems'));
+        $galleryItems = GalleryItem::published()
+            ->with('event')
+            ->when($request->filled('event'), function ($query) use ($request) {
+                $query->where('event_id', $request->input('event'));
+            })
+            ->ordered()
+            ->get();
+
+        $selectedEvent = $request->filled('event')
+            ? Event::find($request->input('event'))
+            : null;
+
+        return view('gallery', compact('galleryItems', 'events', 'selectedEvent'));
     }
 }

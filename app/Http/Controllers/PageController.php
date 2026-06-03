@@ -19,4 +19,11 @@ class PageController extends Controller
 
         return view('contact', compact('page'));
     }
+
+    public function faqs()
+    {
+        $page = Page::findBySlug('faqs');
+
+        return view('faqs', compact('page'));
+    }
 }

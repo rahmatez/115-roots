@@ -25,7 +25,7 @@
                             <div class="form-group row border-bottom pb-4">
                                 <label for="title" class="col-sm-2 col-form-label">Title</label>
                                 <div class="col-sm-10">
-                                <input type="text" class="form-control" name="title" value="{{ old('title') }}" id="title" placeholder="example: 5 tips travel">
+                                <input type="text" class="form-control" name="title" value="{{ old('title') }}" id="title" placeholder="example: Matchday Nobar PSS Sleman">
                                 </div>
                             </div>
                             <div class="form-group row border-bottom pb-4">
@@ -54,6 +54,21 @@
                                 <label for="description" class="col-sm-2 col-form-label">Description</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control" name="description" id="description" cols="30" rows="7">{{ old('description') }}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row border-bottom pb-4">
+                                <label for="status" class="col-sm-2 col-form-label">Status</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="status" id="status">
+                                        <option value="published" {{ old('status', 'published') === 'published' ? 'selected' : '' }}>Published</option>
+                                        <option value="draft" {{ old('status') === 'draft' ? 'selected' : '' }}>Draft</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row border-bottom pb-4">
+                                <label for="published_at" class="col-sm-2 col-form-label">Publish Date</label>
+                                <div class="col-sm-10">
+                                    <input type="datetime-local" class="form-control" name="published_at" id="published_at" value="{{ old('published_at') }}">
                                 </div>
                             </div>
                             <div class="form-group row border-bottom pb-4">
