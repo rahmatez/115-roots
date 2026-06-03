@@ -1,89 +1,95 @@
 # Eleven Five Roots (115-roots)
 
-> Website resmi komunitas suporter **Suicide Squad 11.5** — *Unite To Empower*.
+> Official website for **Suicide Squad 11.5** supporter community — *Unite To Empower*.
 
-CMS dan landing page untuk komunitas suporter PSS Sleman. Mengelola konten publik (blog, galeri, events, shop) dan panel admin dalam satu aplikasi Laravel.
-
----
-
-## Tentang Proyek
-
-**Eleven Five Roots** adalah platform web komunitas suporter yang dibangun dari template travel/booking menjadi CMS modern. Situs ini menjadi pusat informasi untuk:
-
-- Berita dan artikel komunitas
-- Jadwal dan dokumentasi event (nobar, away day, gathering)
-- Katalog merchandise / shop
-- Galeri foto kegiatan
-- Halaman statis (About, FAQs, Contact)
+A Laravel CMS and landing page for the PSS Sleman supporter community. Manage public content (blog, gallery, events, shop) and a modern admin panel in one application.
 
 ---
 
-## Fitur
+## About
 
-### Halaman Publik
+**Eleven Five Roots** is a supporter community platform refactored from a travel/booking template into a modern CMS. The site serves as a hub for:
 
-| Halaman | URL | Keterangan |
-|---------|-----|------------|
-| Homepage | `/` | Hero, about, shop carousel, events, blog, galeri slider, YouTube |
-| Shop | `/shop` | Katalog produk merchandise |
-| Blog | `/blogs` | Artikel dengan search, kategori, dan pagination |
-| Events | `/events` | Event upcoming & past |
-| Gallery | `/gallery` | Foto kegiatan, filter per event/album |
-| About | `/about-us` | Konten dari CMS |
-| FAQs | `/faqs` | Pertanyaan umum |
-| Contact | `/contact` | Form kontak + info sosial media |
-| RSS Feed | `/feed` | Feed artikel blog |
-| Sitemap | `/sitemap.xml` | Sitemap SEO |
+- Community news and articles
+- Event schedules and documentation (watch parties, away days, gatherings)
+- Merchandise catalog and order intake
+- Instagram-powered photo gallery
+- Static pages (About, FAQs, Contact)
 
-### Panel Admin (`/admin`)
+---
 
-| Modul | Fungsi |
-|-------|--------|
-| Dashboard | Statistik & ringkasan pesan terbaru |
-| Blog & Category | CRUD artikel (draft/published) + kategori |
-| Events | CRUD event dengan tanggal, lokasi, galeri album |
-| Shop Products | CRUD produk dengan harga & link eksternal |
-| Gallery | Upload foto, hubungkan ke event |
-| Pages | Edit konten CMS (About, FAQs, Contact, Site Settings) |
-| Messages | Inbox pesan kontak + balas via email |
-| Users | Kelola akun admin |
+## Features
 
-**Site Settings** (via Admin → Pages → Site Settings):
+### Public Pages
 
-- Hero title & subtitle
-- Hero background images
+| Page | URL | Description |
+|------|-----|-------------|
+| Homepage | `/` | Hero, about, shop carousel, events, blog, gallery slider, YouTube |
+| Shop | `/shop` | Product catalog with on-site order form |
+| Blog | `/blogs` | Articles with search, categories, and pagination |
+| Events | `/events` | Upcoming and past events |
+| Gallery | `/gallery` | Photos synced from Instagram feed |
+| About | `/about-us` | CMS-driven content |
+| FAQs | `/faqs` | Frequently asked questions |
+| Contact | `/contact` | Contact form + social links |
+| RSS Feed | `/feed` | Blog article feed |
+| Sitemap | `/sitemap.xml` | SEO sitemap |
+
+### Admin Panel (`/admin`)
+
+| Module | Description |
+|--------|-------------|
+| Dashboard | Stats, recent orders, blog posts, and messages |
+| Blog & Categories | CRUD articles (draft/published) + categories |
+| Events | CRUD events with date, location, and event photo albums |
+| Shop Products | CRUD products with pricing |
+| Orders | View and delete customer shop orders with payment proof |
+| Event Photos | Upload photos linked to specific events |
+| Pages | Edit CMS content (About, FAQs, Contact, Site Settings) |
+| Messages | Contact inbox + email replies |
+| Users | Manage admin accounts |
+
+**Site Settings** (Admin → Pages → Site Settings):
+
+- Hero title, subtitle, and background images
 - Partner logos
 - Announcement banner
-- YouTube embed & channel URL
-- Footer & social links
+- YouTube embed and channel URL
+- Instagram gallery API credentials
+- Footer and social links
+
+**Shop orders:** Customers submit orders from `/shop/{product}` with name, address, phone, and payment proof upload. Orders appear automatically in Admin → Orders.
+
+**Gallery:** The public gallery and homepage slider pull photos from your Instagram account via the Instagram Graph API (no manual uploads for the main gallery).
 
 ---
 
 ## Tech Stack
 
-| Layer | Teknologi |
-|-------|-----------|
+| Layer | Technology |
+|-------|------------|
 | Backend | Laravel 10, PHP 8.1+ |
 | Frontend | Blade, custom CSS, Swiper, ScrollReveal |
-| Admin UI | AdminLTE |
+| Admin UI | Custom modern dashboard |
 | Database | MySQL / MariaDB / SQLite |
 | Editor | CKEditor 5 |
-| Auth | Laravel UI (login, tanpa register publik) |
+| Auth | Laravel UI (login only, public registration disabled) |
+| Gallery | Instagram Graph API |
 
 ---
 
-## Persyaratan
+## Requirements
 
 - PHP **8.1+** (extensions: BCMath, Ctype, Fileinfo, JSON, Mbstring, OpenSSL, PDO, Tokenizer, XML)
 - [Composer](https://getcomposer.org/)
 - MySQL / MariaDB / SQLite
-- Node.js *(opsional, untuk build asset Vite)*
+- Node.js *(optional, for Vite asset builds)*
 
 ---
 
-## Instalasi
+## Installation
 
-### 1. Clone & install dependencies
+### 1. Clone and install dependencies
 
 ```bash
 git clone https://github.com/<username>/115-roots.git
@@ -98,7 +104,7 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-Edit `.env` — minimal atur koneksi database:
+Edit `.env` — at minimum configure the database:
 
 ```env
 DB_CONNECTION=mysql
@@ -109,85 +115,92 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-### 3. Database & storage
+### 3. Database and storage
 
 ```bash
 php artisan migrate --seed
 php artisan storage:link
 ```
 
-### 4. Jalankan server
+### 4. Run the server
 
 ```bash
 php artisan serve
 ```
 
-Buka **http://127.0.0.1:8000**
+Open **http://127.0.0.1:8000**
 
 ---
 
-## Akun Admin
+## Default Admin Account
 
-Setelah seed, login di **http://127.0.0.1:8000/login**
+After seeding, log in at **http://127.0.0.1:8000/login**
 
 | | Default |
 |---|---------|
 | Email | `admin@suicide.com` |
 | Password | `suicide115` |
 
-Kustomisasi via `.env` **sebelum** menjalankan seed:
+Customize via `.env` **before** running seed:
 
 ```env
 ADMIN_NAME="Admin"
 ADMIN_EMAIL=admin@suicide.com
-ADMIN_PASSWORD=password_anda_yang_kuat
+ADMIN_PASSWORD=your_strong_password
 ```
 
-> **Production:** gunakan password kuat dan jangan commit `.env` ke repository.
+> **Production:** Use a strong password and never commit `.env` to the repository.
 
 ---
 
 ## Environment Variables
 
-| Variabel | Deskripsi |
-|----------|-----------|
-| `APP_URL` | URL situs (sitemap, OG tags, RSS) |
-| `ADMIN_NAME` | Nama admin saat seed |
-| `ADMIN_EMAIL` | Email admin saat seed |
-| `ADMIN_PASSWORD` | Password admin saat seed |
-| `MAIL_MAILER` | Driver email (`smtp`, `log`, dll.) |
-| `MAIL_HOST` | Host SMTP |
-| `MAIL_PORT` | Port SMTP |
-| `MAIL_USERNAME` | Username SMTP |
-| `MAIL_PASSWORD` | Password SMTP |
-| `MAIL_FROM_ADDRESS` | Alamat pengirim email |
-| `MAIL_FROM_NAME` | Nama pengirim email |
+| Variable | Description |
+|----------|-------------|
+| `APP_URL` | Site URL (sitemap, OG tags, RSS) |
+| `ADMIN_NAME` | Admin display name when seeding |
+| `ADMIN_EMAIL` | Admin email when seeding |
+| `ADMIN_PASSWORD` | Admin password when seeding |
+| `MAIL_MAILER` | Email driver (`smtp`, `log`, etc.) |
+| `MAIL_HOST` | SMTP host |
+| `MAIL_PORT` | SMTP port |
+| `MAIL_USERNAME` | SMTP username |
+| `MAIL_PASSWORD` | SMTP password |
+| `MAIL_FROM_ADDRESS` | Sender email address |
+| `MAIL_FROM_NAME` | Sender display name |
+| `INSTAGRAM_USERNAME` | Instagram handle (e.g. `suicidesquad11.5`) |
+| `INSTAGRAM_USER_ID` | Instagram Business account numeric ID |
+| `INSTAGRAM_ACCESS_TOKEN` | Long-lived Instagram Graph API token |
+| `INSTAGRAM_FEED_LIMIT` | Max posts to fetch (default: 25) |
+| `INSTAGRAM_CACHE_TTL` | Feed cache duration in seconds (default: 3600) |
 
-Form kontak dan balasan admin membutuhkan konfigurasi `MAIL_*` yang valid.
+Contact forms and admin reply emails require valid `MAIL_*` configuration.
+
+Instagram gallery requires a **Business** or **Creator** Instagram account connected to a Meta Developer app. Credentials can also be set in Admin → Pages → Site Settings.
 
 ---
 
 ## Seeders
 
-| Seeder | Isi |
-|--------|-----|
-| `AdminSeeder` | Akun admin |
+| Seeder | Contents |
+|--------|----------|
+| `AdminSeeder` | Admin user account |
 | `PageSeeder` | About, FAQs, Contact, Site Settings |
-| `CategorySeeder` | Kategori blog |
-| `BlogSeeder` | Artikel contoh |
-| `EventSeeder` | Event contoh |
-| `ProductSeeder` | Produk shop contoh |
+| `CategorySeeder` | Blog categories |
+| `BlogSeeder` | Sample articles |
+| `EventSeeder` | Sample events |
+| `ProductSeeder` | Sample shop products |
 
 ```bash
-# Seed semua
+# Seed all
 php artisan db:seed
 
-# Seed spesifik
+# Seed specific seeder
 php artisan db:seed --class=AdminSeeder
 php artisan db:seed --class=EventSeeder
 ```
 
-Reset penuh database + seed:
+Full database reset + seed:
 
 ```bash
 php artisan migrate:fresh --seed
@@ -195,24 +208,27 @@ php artisan migrate:fresh --seed
 
 ---
 
-## Struktur Proyek
+## Project Structure
 
 ```
 115-roots/
 ├── app/
-│   ├── Http/Controllers/       # Controller publik & admin
-│   ├── Http/Requests/          # Form validation
-│   ├── Models/                 # Eloquent models
-│   └── Support/                # Helpers (SlugGenerator, dll.)
+│   ├── Http/Controllers/       # Public and admin controllers
+│   ├── Http/Requests/            # Form validation
+│   ├── Models/                   # Eloquent models
+│   ├── Services/                 # InstagramFeedService, etc.
+│   └── Support/                  # Helpers (SlugGenerator, etc.)
 ├── database/
 │   ├── migrations/
 │   └── seeders/
-├── public/frontend/            # Asset frontend (CSS, JS, gambar)
+├── public/
+│   ├── admin/                    # Admin CSS/JS
+│   └── frontend/                 # Frontend assets (CSS, JS, images)
 ├── resources/views/
-│   ├── admin/                  # View panel admin
-│   ├── blogs/, events/, shop/  # View halaman publik
-│   └── layouts/                # Layout frontend & admin
-└── routes/web.php              # Route aplikasi
+│   ├── admin/                    # Admin panel views
+│   ├── blogs/, events/, shop/    # Public page views
+│   └── layouts/                  # Frontend and admin layouts
+└── routes/web.php                # Application routes
 ```
 
 ---
@@ -223,60 +239,61 @@ php artisan migrate:fresh --seed
 php artisan test
 ```
 
-> Disarankan menggunakan database terpisah untuk testing. Uncomment baris SQLite di `phpunit.xml` agar test tidak menimpa data development.
+> Use a separate database for testing. Uncomment the SQLite lines in `phpunit.xml` so tests do not overwrite your development data.
 
 ---
 
-## Deploy ke Production
+## Production Deployment
 
-1. Set environment production:
+1. Set production environment:
    ```env
    APP_ENV=production
    APP_DEBUG=false
-   APP_URL=https://domain-anda.com
+   APP_URL=https://your-domain.com
    ```
 2. Install dependencies:
    ```bash
    composer install --no-dev --optimize-autoloader
    ```
-3. Migrasi & storage:
+3. Migrate and link storage:
    ```bash
    php artisan migrate --force
    php artisan storage:link
    ```
-4. Seed admin *(hanya first deploy)* — pastikan `ADMIN_PASSWORD` sudah kuat
-5. Konfigurasi `MAIL_*` untuk form kontak
-6. Cache optimasi:
+4. Seed admin *(first deploy only)* — ensure `ADMIN_PASSWORD` is strong
+5. Configure `MAIL_*` for contact forms
+6. Configure Instagram API credentials for the gallery
+7. Optimize caches:
    ```bash
    php artisan config:cache
    php artisan route:cache
    php artisan view:cache
    ```
-7. Pastikan `storage/` dan `bootstrap/cache/` writable oleh web server
-8. Verifikasi endpoint: `/`, `/shop`, `/events`, `/sitemap.xml`, `/feed`
+8. Ensure `storage/` and `bootstrap/cache/` are writable by the web server
+9. Verify endpoints: `/`, `/shop`, `/events`, `/gallery`, `/sitemap.xml`, `/feed`
 
 ---
 
-## Route Penting
+## Key Routes
 
-| Akses | URL |
-|-------|-----|
+| Access | URL |
+|--------|-----|
 | Homepage | `/` |
 | Admin Dashboard | `/admin/dashboard` |
 | Login | `/login` |
 
-Registrasi publik **dinonaktifkan** — hanya admin yang dapat membuat user baru.
+Public registration is **disabled** — only existing admins can create new users.
 
 ---
 
-## Lisensi
+## License
 
-Proyek ini menggunakan [MIT License](https://opensource.org/licenses/MIT) (Laravel framework).
+This project uses the [MIT License](https://opensource.org/licenses/MIT) (Laravel framework).
 
 ---
 
-## Kredit
+## Credits
 
-Dikembangkan untuk komunitas **Suicide Squad 11.5** — suporter PSS Sleman.
+Built for **Suicide Squad 11.5** — PSS Sleman supporter community.
 
 Built with love by [GEGA CREATIVE](https://www.gegacreative.com/)
