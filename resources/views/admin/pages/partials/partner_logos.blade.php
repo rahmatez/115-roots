@@ -23,7 +23,8 @@
 
 <hr><h5>Hero Background Images</h5>
 @php
-    $heroImages = old('hero_images', $heroImages ?? ['frontend/assets/img/hero1.jpg', 'frontend/assets/img/hero2.JPG', 'frontend/assets/img/hero3.jpg']);
+    use App\Support\HeroImages;
+    $heroImages = old('hero_images', $heroImages ?? HeroImages::DEFAULT);
 @endphp
 @foreach($heroImages as $index => $img)
     <div class="form-group">

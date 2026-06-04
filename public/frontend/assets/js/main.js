@@ -168,5 +168,5 @@ sr.reveal(".popular__container,.blog__container, .footer__container, .contact-ar
 sr.reveal(".footer__info", { delay: 100 });
 sr.reveal(".home__value", { delay: 100 });
 sr.reveal(".logos__img", { interval: 100 });
-sr.reveal(".values__images, .contact__content", { origin: "left" });
+sr.reveal(".value__images, .contact__content", { origin: "left" });
 sr.reveal(".value__content, .contact__images", { origin: "right" });

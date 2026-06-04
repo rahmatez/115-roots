@@ -103,11 +103,7 @@
 
                         @include('admin.pages.partials.partner_logos', [
                             'links' => old('partner_logos', $page->settings['partner_logos'] ?? []),
-                            'heroImages' => old('hero_images', $page->settings['hero_images'] ?? [
-                                'frontend/assets/img/hero1.jpg',
-                                'frontend/assets/img/hero2.JPG',
-                                'frontend/assets/img/hero3.jpg',
-                            ]),
+                            'heroImages' => old('hero_images', $page->settings['hero_images'] ?? \App\Support\HeroImages::DEFAULT),
                         ])
                         @include('admin.pages.partials.social_links', ['links' => old('social_links', $page->settings['social_links'] ?? [])])
                     @elseif($page->slug === 'contact')
